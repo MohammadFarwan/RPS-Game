@@ -7,19 +7,18 @@ using System.Threading.Tasks;
 
 namespace Rock_Paper_Scissors
 {
-    public class player
+    public class Player
     {
-
-        public string name;
-        public int score;
+        public string Name { get; set; }
+        public int Score { get; set; }
 
         public string ChooseMove()
         {
-            //rock, paper, or scissors
-            Console.WriteLine("Type the number that indecate to your choose");
-            Console.WriteLine("1.rock");
-            Console.WriteLine("2.paper");
-            Console.WriteLine("3.scissors");
+            Console.WriteLine("Type the number that indicates your choice");
+            Console.WriteLine("1. Rock");
+            Console.WriteLine("2. Paper");
+            Console.WriteLine("3. Scissors");
+            Console.WriteLine();
 
             string choose = Console.ReadLine();
 
@@ -30,21 +29,19 @@ namespace Rock_Paper_Scissors
                     switch (choose)
                     {
                         case "1":
-                            return "rock";
-                            break;
+                            return "Rock";
                         case "2":
-                            return "paper";
-                            break;
+                            return "Paper";
                         case "3":
-                            return "scissors";
-                            break;
+                            return "Scissors";
                     }
-                } else
+                }
+                else
                 {
-                    Console.WriteLine("Please Type the valid number that indecate to your choose");
-                    Console.WriteLine("1.rock");
-                    Console.WriteLine("2.paper");
-                    Console.WriteLine("3.scissors");
+                    Console.WriteLine("Please type a valid number that indicates your choice");
+                    Console.WriteLine("1. Rock");
+                    Console.WriteLine("2. Paper");
+                    Console.WriteLine("3. Scissors");
                     choose = Console.ReadLine();
                 }
             }
