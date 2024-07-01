@@ -4,66 +4,89 @@ namespace Rock_Paper_Scissors
 {
     public class RPSGame
     {
-        private string[] _choices = { "Rock", "Paper", "Scissors" };
-        private Random _random = new Random();
+        private Player player;
+        private Player ai;
+
+        public RPSGame(Player player, Player ai)
+        {
+            this.player = player;
+            this.ai = ai;
+        }
 
         public void StartGame()
         {
-            Player player = new Player();
-            Console.WriteLine("Let's start the game!");
-            Console.WriteLine("Enter your name:");
-            player.Name = Console.ReadLine();
-            player.Score = 0;
-            int aiScore = 0;
+            int rounds = 0;
 
-            PlayUntilScoreThree(player, aiScore);
-        }
-
-        public void PlayUntilScoreThree(Player player, int aiScore)
-        {
-            while (player.Score < 3 && aiScore < 3)
+            while (rounds < 3 && player.Score < 3 && ai.Score < 3)
             {
-                PlayRound(player, aiScore);
+                PlayRound();
+                rounds++;
             }
 
-            if (player.Score == 3)
-                Console.WriteLine($"{player.Name} wins the game!");
-            else
-                Console.WriteLine("AI wins the game!");
+            DisplayFinalScores();
+            DeclareWinner();
         }
 
-        public void PlayRound(Player player, int aiScore)
+        private void PlayRound()
         {
             string playerMove = player.ChooseMove();
-            string aiMove = GetAiMove();
-            Console.WriteLine($"Your choice: {playerMove}");
-            Console.WriteLine($"AI choice: {aiMove}");
+            string aiMove = ai.RandomMove();
 
-            DetermineWinner(playerMove, aiMove, player);
+            Console.WriteLine($"{player.Name} chose {playerMove}");
+            Console.WriteLine($"{ai.Name} chose {aiMove}");
+
+            string result = DetermineWinner(playerMove, aiMove);
+            Console.WriteLine(result);
+
+            DisplayScores();
         }
 
-        public string GetAiMove()
-        {
-            int randomIndex = _random.Next(0, _choices.Length);
-            return _choices[randomIndex];
-        }
-
-        public void DetermineWinner(string playerMove, string aiMove, Player player)
+        public string DetermineWinner(string playerMove, string aiMove)
         {
             if (playerMove == aiMove)
             {
-                Console.WriteLine("It's a tie!");
+                return "It's a tie!";
             }
-            else if ((playerMove == "Scissors" && aiMove == "Paper") ||
-                     (playerMove == "Rock" && aiMove == "Scissors") ||
-                     (playerMove == "Paper" && aiMove == "Rock"))
+            else if ((playerMove == "rock" && aiMove == "scissors") ||
+                     (playerMove == "paper" && aiMove == "rock") ||
+                     (playerMove == "scissors" && aiMove == "paper"))
             {
                 player.Score++;
-                Console.WriteLine($"{player.Name} wins this round! Score: {player.Score}");
+                return $"{player.Name} wins this round!";
             }
             else
             {
-                Console.WriteLine($"AI wins this round!");
+                ai.Score++;
+                return $"{ai.Name} wins this round!";
+            }
+        }
+
+        private void DisplayScores()
+        {
+            Console.WriteLine($"{player.Name}: {player.Score}");
+            Console.WriteLine($"{ai.Name}: {ai.Score}");
+        }
+
+        private void DisplayFinalScores()
+        {
+            Console.WriteLine("Final Scores:");
+            Console.WriteLine($"{player.Name}: {player.Score}");
+            Console.WriteLine($"{ai.Name}: {ai.Score}");
+        }
+
+        private void DeclareWinner()
+        {
+            if (player.Score > ai.Score)
+            {
+                Console.WriteLine($"{player.Name} is the overall winner!");
+            }
+            else if (ai.Score > player.Score)
+            {
+                Console.WriteLine($"{ai.Name} is the overall winner!");
+            }
+            else
+            {
+                Console.WriteLine("The game is a tie!");
             }
         }
     }

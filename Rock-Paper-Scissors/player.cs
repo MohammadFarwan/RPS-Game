@@ -9,42 +9,35 @@ namespace Rock_Paper_Scissors
 {
     public class Player
     {
-        public string Name { get; set; }
+        public string Name { get; private set; }
         public int Score { get; set; }
+
+        public Player(string name)
+        {
+            Name = name;
+            Score = 0;
+        }
 
         public string ChooseMove()
         {
-            Console.WriteLine("Type the number that indicates your choice");
-            Console.WriteLine("1. Rock");
-            Console.WriteLine("2. Paper");
-            Console.WriteLine("3. Scissors");
-            Console.WriteLine();
+            Console.WriteLine($"{Name}, please choose your move (rock, paper, scissors): ");
+            string move = Console.ReadLine().ToLower();
 
-            string choose = Console.ReadLine();
-
-            while (true)
+            while (move != "rock" && move != "paper" && move != "scissors")
             {
-                if (choose == "1" || choose == "2" || choose == "3")
-                {
-                    switch (choose)
-                    {
-                        case "1":
-                            return "Rock";
-                        case "2":
-                            return "Paper";
-                        case "3":
-                            return "Scissors";
-                    }
-                }
-                else
-                {
-                    Console.WriteLine("Please type a valid number that indicates your choice");
-                    Console.WriteLine("1. Rock");
-                    Console.WriteLine("2. Paper");
-                    Console.WriteLine("3. Scissors");
-                    choose = Console.ReadLine();
-                }
+                Console.WriteLine("Invalid move. Please choose rock, paper, or scissors: ");
+                move = Console.ReadLine().ToLower();
             }
+
+            return move;
+        }
+
+        public string RandomMove()
+        {
+            string[] moves = { "rock", "paper", "scissors" };
+            Random random = new Random();
+            int index = random.Next(moves.Length);
+            return moves[index];
         }
     }
 }

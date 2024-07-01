@@ -8,74 +8,92 @@ public class UnitTest1
     public void DetermineWinner_PlayerWins()
     {
         // Arrange
-        var player = new Player { Name = "TestPlayer", Score = 0 };
-        var game = new RPSGame();
+        var player = new Player("Player");
+        var ai = new Player("AI");
+        var game = new RPSGame(player, ai);
 
         // Act
-        game.DetermineWinner("Rock", "Scissors", player);
+        string result = game.DetermineWinner("rock", "scissors");
 
         // Assert
-        Assert.Equal(1, player.Score);
+        Assert.Equal($"{player.Name} wins this round!", result);
     }
 
     [Fact]
     public void DetermineWinner_AIWins()
     {
         // Arrange
-        var player = new Player { Name = "TestPlayer", Score = 0 };
-        var game = new RPSGame();
+        var player = new Player("Player");
+        var ai = new Player("AI");
+        var game = new RPSGame(player, ai);
 
         // Act
-        game.DetermineWinner("Rock", "Paper", player);
+        string result = game.DetermineWinner("rock", "paper");
 
         // Assert
-        Assert.Equal(0, player.Score);
+        Assert.Equal($"{ai.Name} wins this round!", result);
     }
 
     [Fact]
     public void DetermineWinner_Tie()
     {
         // Arrange
-        var player = new Player { Name = "TestPlayer", Score = 0 };
-        var game = new RPSGame();
+        var player = new Player("Player");
+        var ai = new Player("AI");
+        var game = new RPSGame(player, ai);
 
         // Act
-        game.DetermineWinner("Rock", "Rock", player);
+        string result = game.DetermineWinner("rock", "rock");
 
         // Assert
-        Assert.Equal(0, player.Score);
+        Assert.Equal("It's a tie!", result);
     }
 
     [Fact]
-    public void PlayRound_AIScoreUpdatesCorrectly()
+    public void UpdateScores_PlayerWins()
     {
         // Arrange
-        var player = new Player { Name = "TestPlayer", Score = 0 };
-        var game = new RPSGame();
+        var player = new Player("Player");
+        var ai = new Player("AI");
+        var game = new RPSGame(player, ai);
 
         // Act
-        game.DetermineWinner("Rock", "Paper", player);
+        game.DetermineWinner("rock", "scissors");
 
         // Assert
-        Assert.Equal(0, player.Score);
+        Assert.Equal(1, player.Score);
+        Assert.Equal(0, ai.Score);
     }
 
     [Fact]
-    public void PlayUntilScoreThree_PlayerWins()
+    public void UpdateScores_AIWins()
     {
         // Arrange
-        var player = new Player { Name = "TestPlayer", Score = 0 };
-        var game = new RPSGame();
-
-        // Simulate player winning 3 rounds
-        game.DetermineWinner("Rock", "Scissors", player);
-        game.DetermineWinner("Paper", "Rock", player);
-        game.DetermineWinner("Scissors", "Paper", player);
+        var player = new Player("Player");
+        var ai = new Player("AI");
+        var game = new RPSGame(player, ai);
 
         // Act
-        game.PlayUntilScoreThree(player, 0);
+        game.DetermineWinner("rock", "paper");
 
         // Assert
-        Assert.Equal(3, player.Score);
+        Assert.Equal(0, player.Score);
+        Assert.Equal(1, ai.Score);
+    }
+
+    [Fact]
+    public void UpdateScores_Tie()
+    {
+        // Arrange
+        var player = new Player("Player");
+        var ai = new Player("AI");
+        var game = new RPSGame(player, ai);
+
+        // Act
+        game.DetermineWinner("rock", "rock");
+
+        // Assert
+        Assert.Equal(0, player.Score);
+        Assert.Equal(0, ai.Score);
     }
 }
