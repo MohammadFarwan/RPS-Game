@@ -7,47 +7,37 @@ using System.Threading.Tasks;
 
 namespace Rock_Paper_Scissors
 {
-    public class player
+    public class Player
     {
+        public string Name { get; private set; }
+        public int Score { get; set; }
 
-        public string name;
-        public int score;
+        public Player(string name)
+        {
+            Name = name;
+            Score = 0;
+        }
 
         public string ChooseMove()
         {
-            //rock, paper, or scissors
-            Console.WriteLine("Type the number that indecate to your choose");
-            Console.WriteLine("1.rock");
-            Console.WriteLine("2.paper");
-            Console.WriteLine("3.scissors");
+            Console.WriteLine($"{Name}, please choose your move (rock, paper, scissors): ");
+            string move = Console.ReadLine().ToLower();
 
-            string choose = Console.ReadLine();
-
-            while (true)
+            while (move != "rock" && move != "paper" && move != "scissors")
             {
-                if (choose == "1" || choose == "2" || choose == "3")
-                {
-                    switch (choose)
-                    {
-                        case "1":
-                            return "rock";
-                            break;
-                        case "2":
-                            return "paper";
-                            break;
-                        case "3":
-                            return "scissors";
-                            break;
-                    }
-                } else
-                {
-                    Console.WriteLine("Please Type the valid number that indecate to your choose");
-                    Console.WriteLine("1.rock");
-                    Console.WriteLine("2.paper");
-                    Console.WriteLine("3.scissors");
-                    choose = Console.ReadLine();
-                }
+                Console.WriteLine("Invalid move. Please choose rock, paper, or scissors: ");
+                move = Console.ReadLine().ToLower();
             }
+
+            return move;
+        }
+
+        public string RandomMove()
+        {
+            string[] moves = { "rock", "paper", "scissors" };
+            Random random = new Random();
+            int index = random.Next(moves.Length);
+            return moves[index];
         }
     }
 }

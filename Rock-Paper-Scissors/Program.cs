@@ -1,18 +1,20 @@
 ﻿namespace Rock_Paper_Scissors
 {
-    public class Program
+    class Program
     {
         static void Main(string[] args)
         {
+            Console.WriteLine("Welcome to Rock, Paper, Scissors!");
+            Console.WriteLine("Enter your name: ");
+            string playerName = Console.ReadLine();
 
-            RPSGame n1 = new RPSGame();
+            Player player = new Player(playerName);
+            Player ai = new Player("AI");
 
-            n1.start();
+            RPSGame game = new RPSGame(player, ai);
+            game.StartGame();
 
-
-
-
-            Console.WriteLine("\n\n\n==============THE END!=================\n");
+            Console.WriteLine("Thank you for playing!");
         }
     }
 }

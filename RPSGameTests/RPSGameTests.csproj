@@ -22,4 +22,8 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Rock-Paper-Scissors\RPSGame.csproj" />
+  </ItemGroup>
+
 </Project>
